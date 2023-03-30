@@ -12,6 +12,12 @@ namespace BackendProject.DAL
         }
 
         public DbSet<Slider> Sliders { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseDetail> CoursDetails { get; set; }
+        public DbSet<Category> Categories { get; set; }
+
+
+
 
     }
 }
