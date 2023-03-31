@@ -12,7 +12,6 @@ namespace BackendProject.DAL
         }
 
         public DbSet<Slider> Sliders { get; set; }
-
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseDetail> CoursDetails { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -35,6 +34,8 @@ namespace BackendProject.DAL
         public DbSet<AboutEduHome> AboutEduHomes { get; set; }
 
         public DbSet<VideoYT> VideoYTs { get; set; }
+
+        public DbSet<Bio> Bios { get; set; }
 
     }
 }
