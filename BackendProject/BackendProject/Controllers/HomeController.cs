@@ -19,6 +19,7 @@ namespace BackendProject.Controllers
             HomeVM homeVM = new();
             homeVM.Sliders = _appDbContext.Sliders.ToList();
             homeVM.Notices = _appDbContext.Notices.OrderByDescending(n=>n.CreatedDate).ToList();
+            homeVM.AboutInfos = _appDbContext.AboutInfos.ToList();
 
             return View(homeVM);
         }
