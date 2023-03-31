@@ -18,6 +18,8 @@ namespace BackendProject.Controllers
         {
             HomeVM homeVM = new();
             homeVM.Sliders = _appDbContext.Sliders.ToList();
+            homeVM.Notices = _appDbContext.Notices.ToList();
+
             return View(homeVM);
         }
     }
