@@ -37,5 +37,8 @@ namespace BackendProject.DAL
 
         public DbSet<Bio> Bios { get; set; }
 
+        public DbSet<About> Abouts { get; set; }
+
+
     }
 }
