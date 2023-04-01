@@ -8,5 +8,6 @@ namespace BackendProject.ViewModels
         public List<Notice> Notices { get; set; }
         public List<AboutInfo> AboutInfos { get; set; }
         public AboutEduHome AboutEduHome { get; set; }
+        public List<Course> Course { get; set; }
     }
 }
