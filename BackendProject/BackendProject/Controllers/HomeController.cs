@@ -1,6 +1,7 @@
 ﻿using BackendProject.DAL;
 using BackendProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BackendProject.Controllers
 {
@@ -21,6 +22,10 @@ namespace BackendProject.Controllers
             homeVM.Notices = _appDbContext.Notices.OrderByDescending(n=>n.CreatedDate).ToList();
             homeVM.AboutInfos = _appDbContext.AboutInfos.ToList();
             homeVM.AboutEduHome = _appDbContext.AboutEduHomes.FirstOrDefault();
+            homeVM.Courses = _appDbContext.Courses
+                .Include(c=>c.CourseDetail)
+                .Take(3)
+                .ToList();
 
             return View(homeVM);
         }
