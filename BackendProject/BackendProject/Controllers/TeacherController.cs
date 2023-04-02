@@ -34,5 +34,18 @@ namespace BackendProject.Controllers
             }
             return View(teacherVMs);
         }
+
+        public IActionResult Detail(int id)
+        {
+            if (id == null) return NotFound();
+
+            TeacherDetailVM teacherDetailVM = new();
+            teacherDetailVM.Teacher = _appDbContext.Teachers.FirstOrDefault(t => t.Id == id);
+            teacherDetailVM.Contacts = _appDbContext.Contacts.FirstOrDefault(c => c.TeacherId == id);
+            teacherDetailVM.Skills = _appDbContext.Skills.Where(s => s.TeacherId == id).ToList();
+            if (teacherDetailVM.Teacher == null) return NotFound();
+
+            return View(teacherDetailVM);
+        }
     }
 }

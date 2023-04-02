@@ -11,7 +11,7 @@
         public string Hobbies { get; set; }
         public string Faculty { get; set; }
 
-        public Skill Skill { get; set; }
+        public List<Skill> Skills { get; set; }
         public Contacts Contacts { get; set; }
     }
 }
