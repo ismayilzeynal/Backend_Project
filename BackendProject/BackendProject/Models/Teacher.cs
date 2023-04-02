@@ -5,6 +5,7 @@
         public string FullName { get; set; }
         public string Title { get; set; }
         public string Desc { get; set; }
+        public string ImageUrl { get; set; }
         public string Degree { get; set; }
         public string Experience { get; set; }
         public string Hobbies { get; set; }
