@@ -1,6 +1,6 @@
 ﻿using BackendProject.Models;
 
-namespace BackendProject.ViewModels
+namespace BackendProject.ViewModels.Home
 {
     public class HomeVM
     {
@@ -8,6 +8,6 @@ namespace BackendProject.ViewModels
         public List<Notice> Notices { get; set; }
         public List<AboutInfo> AboutInfos { get; set; }
         public AboutEduHome AboutEduHome { get; set; }
-        public List<Course> Courses { get; set; }
+        public List<Models.Course> Courses { get; set; }
     }
 }

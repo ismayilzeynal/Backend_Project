@@ -1,4 +1,4 @@
-﻿namespace BackendProject.ViewModels
+﻿namespace BackendProject.ViewModels.Teacher
 {
     public class TeacherVM
     {

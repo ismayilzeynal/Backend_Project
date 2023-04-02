@@ -1,11 +1,11 @@
 ﻿using BackendProject.Models;
 
-namespace BackendProject.ViewModels
+namespace BackendProject.ViewModels.About
 {
     public class AboutVM
     {
-        public About About { get; set; }
-        public List<Teacher> Teachers { get; set; }
+        public Models.About About { get; set; }
+        public List<Models.Teacher> Teachers { get; set; }
         public VideoYT videoYT { get; set; }
         public List<Notice> Notices { get; set; }
     }

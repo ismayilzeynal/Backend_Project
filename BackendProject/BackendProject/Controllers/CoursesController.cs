@@ -1,5 +1,5 @@
 ﻿using BackendProject.DAL;
-using BackendProject.ViewModels;
+using BackendProject.ViewModels.Course;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

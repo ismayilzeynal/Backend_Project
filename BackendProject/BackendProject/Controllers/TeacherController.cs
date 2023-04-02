@@ -1,15 +1,15 @@
 ﻿using BackendProject.DAL;
-using BackendProject.ViewModels;
+using BackendProject.ViewModels.Teacher;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendProject.Controllers
 {
-    public class Teacher : Controller
+    public class TeacherController : Controller
     {
         private readonly AppDbContext _appDbContext;
 
-        public Teacher(AppDbContext appDbContext)
+        public TeacherController(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }

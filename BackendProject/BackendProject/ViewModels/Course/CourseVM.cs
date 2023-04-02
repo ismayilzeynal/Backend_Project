@@ -1,6 +1,6 @@
 ﻿using BackendProject.Models;
 
-namespace BackendProject.ViewModels
+namespace BackendProject.ViewModels.Course
 {
     public class CourseVM
     {
