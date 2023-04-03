@@ -1,4 +1,5 @@
 ﻿using BackendProject.DAL;
+using BackendProject.Models;
 using BackendProject.ViewModels.Course;
 using BackendProject.ViewModels.Event;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,28 @@ namespace BackendProject.Controllers
             }
 
             return View(eventVMs);
+        }
+
+        public IActionResult Detail(int id)
+        {
+            if (id == null) return NotFound();
+            EventDetailVM eventDetailVM = new();
+
+            eventDetailVM.Event = _appDbContext.Events
+                .Include(e=>e.EventSpeakers)
+                .ThenInclude(es=>es.Speaker)
+                .FirstOrDefault(e=>e.Id==id);
+
+            eventDetailVM.Categories = _appDbContext.Categories
+                .Include(c => c.Courses)
+                .Take(6)
+                .ToList();
+            eventDetailVM.SideBlogs = _appDbContext.Blogs
+                .OrderByDescending(b => b.Id)
+                .Take(3)
+                .ToList();
+
+            return View(eventDetailVM);
         }
     }
 }

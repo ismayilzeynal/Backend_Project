@@ -43,7 +43,7 @@
                 <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="single-course mb-70">
                     <div class="course-img">
-                            <a asp-controller="course" asp-action="detail" asp-route-id="@item.Id">
+                            <a asp-controller="courses" asp-action="detail" asp-route-id="@item.Id">
                             <img src="img/course/@item.ImageUrl" alt="course">
                             <div class="course-hover">
                                 <i class="fa fa-link"></i>
@@ -53,7 +53,7 @@
                     <div class="course-content">
                         <h3><a href="course-details.html">@item.Name</a></h3>
                         <p>@item.Desc</p>
-                        <a class="default-btn" asp-controller="course" asp-action="detail" asp-route-id="@item.Id">read more</a>
+                        <a class="default-btn" asp-controller="courses" asp-action="detail" asp-route-id="@item.Id">read more</a>
                     </div>
                 </div>
             </div>

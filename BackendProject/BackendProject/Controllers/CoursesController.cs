@@ -1,4 +1,5 @@
 ﻿using BackendProject.DAL;
+using BackendProject.ViewModels.Blog;
 using BackendProject.ViewModels.Course;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,28 @@ namespace BackendProject.Controllers
                 courseVMs.Add(courseVM);
             }
             return View(courseVMs);
+        }
+
+        public IActionResult Detail(int id)
+        {
+            if (id == null) return NotFound();
+            CourseDetailVM courseDetailVM = new();
+            
+            courseDetailVM.Course = _appDbContext.Courses
+                .Include(c=>c.CourseDetail)
+                .FirstOrDefault(c => c.Id == id);
+            courseDetailVM.Categories = _appDbContext.Categories
+                .Include(c => c.Courses)
+                .Take(6)
+                .ToList();
+            courseDetailVM.SideBlogs = _appDbContext.Blogs
+                .OrderByDescending(b => b.Id)
+                .Take(3)
+                .ToList();
+
+
+
+            return View(courseDetailVM);
         }
     }
 }
