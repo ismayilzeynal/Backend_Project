@@ -35,5 +35,23 @@ namespace BackendProject.Controllers
 
             return View(blogVMs);
         }
+        public IActionResult Detail(int id)
+        {
+            if(id == null) return NotFound();
+            BlogDetailVM blogDetailVM= new();
+            blogDetailVM.Blog = _appDbContext.Blogs.FirstOrDefault(b => b.Id == id);
+            blogDetailVM.Categories = _appDbContext.Categories
+                .Include(c=>c.Courses)
+                .Take(6)
+                .ToList();
+            blogDetailVM.SideBlogs = _appDbContext.Blogs
+                .OrderByDescending(b=>b.Id)
+                .Take(3)
+                .ToList();
+
+
+
+            return View(blogDetailVM);
+        }
     }
 }
