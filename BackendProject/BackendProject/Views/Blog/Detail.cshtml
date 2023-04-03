@@ -27,11 +27,11 @@
             <div class="col-md-8">
                 <div class="blog-details">
                     <div class="blog-details-img">
-                        <img src="~/img/blog/@Model.Blog.ImageUrl" alt="blog-details">
+                        <img src="~/img/blog/@Model.Blog.ImageUrl" width="100%" alt="blog-details">
                     </div>
                     <div class="blog-details-content">
                         <h2>@Model.Blog.Title </h2>
-                        <h6>@Model.Blog.AuthorName  /  @Model.Blog.CreatedDate.ToString("MMMM d, YYYY")  /  <i class="fa fa-comments-o"></i> 4</h6>
+                        <h6>@Model.Blog.AuthorName  /  @Model.Blog.CreatedDate.ToString("MMMM d, yyyy")  /  <i class="fa fa-comments-o"></i> 4</h6>
                         <p>@Model.Blog.Desc</p>
                     </div>
                     <div class="reply-area">
