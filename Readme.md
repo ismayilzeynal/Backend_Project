@@ -12,8 +12,11 @@
   Simple Entities:
   - https://dbdesigner.page.link/NgReRQM6H9VRReEk8
 ```
-Also you can reach pdf and image format inside "Db design" folder.
-Note: Prefer link, because it is always at updated version.
+- Also you can reach pdf and image format inside "Db design" folder.
+- Note: Prefer link, because it is always at updated version.
 
 ## Tips
-* Admin panel endpoint:  "/adminarea" or "/adminarea/dashboard"
+Admin panel endpoint:
+``bash
+  "/adminarea" or "/adminarea/dashboard"
+``
