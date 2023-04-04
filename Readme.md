@@ -13,7 +13,6 @@
   - https://dbdesigner.page.link/NgReRQM6H9VRReEk8
 ```
 Also you can reach pdf and image format inside "Db design" folder.
-
 Note: Prefer link, because it is always at updated version.
 
 ## Tips
