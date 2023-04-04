@@ -158,5 +158,69 @@ namespace BackendProject.Controllers
             return Content("role added");
         }
 
+
+
+        public async Task<IActionResult> ForgetPassword()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordVM forgetPassword)
+        {
+            if (!ModelState.IsValid) return NotFound();
+            AppUser exsistUser = await _userManager.FindByEmailAsync(forgetPassword.Email);
+            if (exsistUser == null)
+            {
+                ModelState.AddModelError("Email", "Email isn't found");
+                return View();
+            }
+            string token = await _userManager.GeneratePasswordResetTokenAsync(exsistUser);
+            string link = Url.Action(nameof(ResetPassword), "Account", new { userId = exsistUser.Id, token },
+                Request.Scheme, Request.Host.ToString());
+
+            string body = string.Empty;
+            string FilePath = "wwwroot/Template/Verify.html";
+            body = _createEmailFile.CreateFile(FilePath, body);
+            body = body.Replace("{{link}}", link);
+            body = body.Replace("{{Fullname}}", exsistUser.Fullname);
+
+            _emailSend.Send(exsistUser.Email, "Reset Password", body);
+            return RedirectToAction(nameof(VerifyEmail));
+        }
+
+        public async Task<IActionResult> ResetPassword(string userId, string token)
+        {
+            ResetPasswordVM resetPassword = new ResetPasswordVM()
+            {
+                UserId = userId,
+                Token = token
+            };
+            return View(resetPassword);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordVM resetPassword)
+        {
+            if (!ModelState.IsValid) return View();
+            AppUser exsistUser = await _userManager.FindByIdAsync(resetPassword.UserId);
+            bool chekPassword = await _userManager.VerifyUserTokenAsync(exsistUser,
+                _userManager.Options.Tokens.PasswordResetTokenProvider,
+                "ResetPassword", resetPassword.Token);
+
+            if (!chekPassword) return Content("Error");
+            if (exsistUser == null) return NotFound();
+            if (await _userManager.CheckPasswordAsync(exsistUser, resetPassword.Password))
+            {
+                ModelState.AddModelError("", "This password is your last password");
+                return View(resetPassword);
+            }
+            await _userManager.ResetPasswordAsync(exsistUser, resetPassword.Token, resetPassword.Password);
+            await _userManager.UpdateSecurityStampAsync(exsistUser);
+            return RedirectToAction(nameof(Login));
+        }
     }
 }
