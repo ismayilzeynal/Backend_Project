@@ -1,6 +1,7 @@
 ﻿using BackendProject.DAL;
 using BackendProject.ViewModels.Blog;
 using BackendProject.ViewModels.Course;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +33,7 @@ namespace BackendProject.Controllers
             return View(courseVMs);
         }
 
+        [Authorize]
         public IActionResult Detail(int id)
         {
             if (id == null) return NotFound();
@@ -48,8 +50,6 @@ namespace BackendProject.Controllers
                 .OrderByDescending(b => b.Id)
                 .Take(3)
                 .ToList();
-
-
 
             return View(courseDetailVM);
         }

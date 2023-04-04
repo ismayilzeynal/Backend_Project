@@ -1,5 +1,6 @@
 ﻿using BackendProject.DAL;
 using BackendProject.ViewModels.Teacher;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,7 @@ namespace BackendProject.Controllers
             return View(teacherVMs);
         }
 
+        [Authorize]
         public IActionResult Detail(int id)
         {
             if (id == null) return NotFound();

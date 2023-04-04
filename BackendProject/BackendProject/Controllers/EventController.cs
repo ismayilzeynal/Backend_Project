@@ -2,11 +2,13 @@
 using BackendProject.Models;
 using BackendProject.ViewModels.Course;
 using BackendProject.ViewModels.Event;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendProject.Controllers
 {
+    [Authorize]
     public class EventController : Controller
     {
         private readonly AppDbContext _appDbContext;
@@ -15,7 +17,6 @@ namespace BackendProject.Controllers
         {
             _appDbContext = appDbContext;
         }
-
 
         public IActionResult Index()
         {
@@ -34,7 +35,6 @@ namespace BackendProject.Controllers
 
                 eventVMs.Add(eventVM);
             }
-
             return View(eventVMs);
         }
 
