@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "lK/YVMkCqpAP50fuAtDZh1jB+hY2IRsl6v4YncX03tw=",
+  "Hash": "1trYsc7aOPcNzYg4DxNkPBAaFSPpBLasumxSaSqjeMY=",
   "Source": "BackendProject",
   "BasePath": "_content/BackendProject",
   "Mode": "Default",
@@ -2650,6 +2650,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\vendor\\modernizr-2.8.3.min.js"
+    },
+    {
+      "Identity": "C:\\Users\\asus\\OneDrive\\Desktop\\Code Academy\\Backend\\Backend_Project\\BackendProject\\BackendProject\\wwwroot\\Template\\Verify.html",
+      "SourceId": "BackendProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\asus\\OneDrive\\Desktop\\Code Academy\\Backend\\Backend_Project\\BackendProject\\BackendProject\\wwwroot\\",
+      "BasePath": "_content/BackendProject",
+      "RelativePath": "Template/Verify.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Template\\Verify.html"
     }
   ]
 }

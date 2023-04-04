@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\BackendProject.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\asus\\OneDrive\\Desktop\\Code Academy\\Backend\\Backend_Project\\BackendProject\\BackendProject\\wwwroot\\Template\\Verify.html",
+      "PackagePath": "staticwebassets\\Template\\Verify.html"
+    },
+    {
       "Id": "C:\\Users\\asus\\OneDrive\\Desktop\\Code Academy\\Backend\\Backend_Project\\BackendProject\\BackendProject\\wwwroot\\admin\\css\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\admin\\css\\bootstrap.min.css"
     },

@@ -1,0 +1,162 @@
+﻿using BackendProject.Helpers;
+using BackendProject.Models;
+using BackendProject.Services.Email;
+using BackendProject.ViewModels.Account;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+
+namespace BackendProject.Controllers
+{
+    public class AccountController : Controller
+    {
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ICreateEmailFile _createEmailFile;
+        private readonly IEmailSend _emailSend;
+
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, ICreateEmailFile createEmailFile, IEmailSend emailSend)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
+            _createEmailFile = createEmailFile;
+            _emailSend = emailSend;
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> Register(RegisterVM registerVM)
+        {
+            if (!ModelState.IsValid) return View(registerVM);
+
+            AppUser user = new AppUser
+            {
+                Fullname = registerVM.Fullname,
+                UserName = registerVM.Username,
+                Email = registerVM.Email,
+                IsActive = true
+            };
+
+            IdentityResult result = await _userManager.CreateAsync(user, registerVM.Password);
+            if (!result.Succeeded)
+            {
+                foreach (var item in result.Errors)
+                {
+                    ModelState.AddModelError("", item.Description);
+                }
+                return View(registerVM);
+            }
+
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            string link = Url.Action(nameof(ConfirmEmail), "Account", new { userId = user.Id, token },
+                Request.Scheme, Request.Host.ToString());
+
+            string body = string.Empty;
+            string FilePath = "wwwroot/Template/Verify.html";
+
+            body = _createEmailFile.CreateFile(FilePath, body);
+            body = body.Replace("{{link}}", link);
+            body = body.Replace("{{Fullname}}", user.Fullname);
+
+            _emailSend.Send(user.Email, "Verify Registration", body); // to user.Email
+            return RedirectToAction(nameof(VerifyEmail));
+        }
+
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null) return NotFound();
+            AppUser user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return NotFound();
+            await _userManager.ConfirmEmailAsync(user, token);
+            await _userManager.AddToRoleAsync(user, RoleEnums.User.ToString());   // add role User
+            await _signInManager.SignInAsync(user, false);
+            return RedirectToAction(nameof(Login));
+        }
+
+        public IActionResult VerifyEmail()
+        {
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> Login(LoginVM login, string? ReturnUrl)
+        {
+            if (!ModelState.IsValid) return View(login);
+            AppUser user = await _userManager.FindByEmailAsync(login.UsernameOrEmail);
+            if (user == null)
+            {
+                user = await _userManager.FindByNameAsync(login.UsernameOrEmail);
+                if (!user.EmailConfirmed)
+                {
+                    ModelState.AddModelError("", "Email Not Confirmed!");
+                    return View(login);
+                }
+                else if (user == null)
+                {
+                    ModelState.AddModelError("", "Username or Password invalid");
+                    return View(login);
+                }
+            }
+            if (!user.IsActive)
+            {
+                ModelState.AddModelError("", "Your account locked");
+                return View(login);
+            }
+            var result = await _signInManager.PasswordSignInAsync(user, login.Password, login.RememberMe, true);
+            if (result.IsLockedOut)
+            {
+                ModelState.AddModelError("", "Your account locked");
+                return View(login);
+            }
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Username or Password invalid");
+                return View(login);
+            }
+            // sign in
+            if (await _userManager.IsInRoleAsync(user, RoleEnums.Admin.ToString()))
+            {
+                return RedirectToAction("index", "dashboard", new { Area = "AdminArea" });
+            }
+            if (ReturnUrl != null)
+            {
+                return Redirect(ReturnUrl);
+            }
+
+            await _signInManager.SignInAsync(user, isPersistent: true);
+            return RedirectToAction("index", "home");
+        }
+
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("login");
+        }
+
+        public async Task<IActionResult> CreateRole()
+        {
+            foreach (var item in Enum.GetValues(typeof(RoleEnums)))
+            {
+                if (!await _roleManager.RoleExistsAsync(item.ToString()))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole { Name = item.ToString() });
+                }
+            }
+            return Content("role added");
+        }
+
+    }
+}
