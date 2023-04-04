@@ -98,14 +98,14 @@ namespace BackendProject.Controllers
             if (user == null)
             {
                 user = await _userManager.FindByNameAsync(login.UsernameOrEmail);
-                if (!user.EmailConfirmed)
-                {
-                    ModelState.AddModelError("", "Email Not Confirmed!");
-                    return View(login);
-                }
-                else if (user == null)
+                if (user == null)
                 {
                     ModelState.AddModelError("", "Username or Password invalid");
+                    return View(login);
+                }
+                else if (!user.EmailConfirmed)
+                {
+                    ModelState.AddModelError("", "Email Not Confirmed!");
                     return View(login);
                 }
             }
