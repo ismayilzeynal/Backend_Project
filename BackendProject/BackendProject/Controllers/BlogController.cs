@@ -2,9 +2,12 @@
 using BackendProject.Models;
 using BackendProject.ViewModels.Blog;
 using BackendProject.ViewModels.Course;
+using BackendProject.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace BackendProject.Controllers
 {
@@ -18,27 +21,28 @@ namespace BackendProject.Controllers
             _appDbContext = appDbContext;
             _userManager = userManager;
         }
-        public IActionResult Index()
+        public IActionResult Index(int page = 1, int take = 9)
         {
-            List<BlogVM> blogVMs = new();
-            var BlogList = _appDbContext.Blogs
-                .Include(b=>b.Comments)
-                .Take(9)
-                .ToList();
-            foreach (var blog in BlogList)
-            {
-                BlogVM blogVM = new();
-                blogVM.Id= blog.Id;
-                blogVM.ImageUrl= blog.ImageUrl;
-                blogVM.Title= blog.Title;
-                blogVM.CreatedDate = blog.CreatedDate;
-                blogVM.AuthorName= blog.AuthorName;
-                blogVM.CommentCount = blog.Comments.Count;
-                blogVMs.Add(blogVM);
-            }
+            var query = _appDbContext.Blogs
+                .Include(b => b.Comments);
 
-            return View(blogVMs);
+            var blogs = query.Skip((page - 1) * take)
+              .Take(take)
+              .ToList();
+
+            int pageCount = CalculatePageCount(query, take);
+            PaginationVM<Blog> pagination = new(blogs, pageCount, page);
+            return View(pagination);
         }
+
+        private int CalculatePageCount(IIncludableQueryable<Blog, List<Comment>> query, int take)
+        {
+            return (int)Math.Ceiling((decimal)(query.Count()) / take);
+        }
+
+
+
+
         public async Task<IActionResult> Detail(int id)
         {
             if(id == null) return NotFound();
