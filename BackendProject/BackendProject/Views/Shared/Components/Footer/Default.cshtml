@@ -8,7 +8,7 @@
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="single-widget pr-60">
                         <div class="footer-logo pb-25">
-                            <a href="index.html"><img src="~/img/logo/@Model.FooterImageUrl" alt="eduhome"></a>
+                            <a asp-controller="home" asp-action="index"><img src="~/img/logo/@Model.FooterImageUrl" alt="eduhome"></a>
                         </div>
                         <p>I must explain to you how all this mistaken idea of denoung pleure and praising pain was born and give you a coete account of the system. </p>
                         <div class="footer-social">
@@ -37,7 +37,7 @@
                         <ul>
                             <li><a href="#">addmission</a></li>
                             <li><a href="#">Academic Calender</a></li>
-                            <li><a href="event.html">Event List</a></li>
+                            <li><a asp-controller="event" asp-action="index">Event List</a></li>
                             <li><a href="#">Hostel &amp; Dinning</a></li>
                             <li><a href="#">TimeTable</a></li>
                         </ul>
@@ -47,11 +47,11 @@
                     <div class="single-widget">
                         <h3>useful links</h3>
                         <ul>
-                            <li><a href="course.html">our courses</a></li>
-                            <li><a href="about.html">about us</a></li>
-                            <li><a href="teacher.html">teachers &amp; faculty</a></li>
+                            <li><a asp-controller="course" asp-action="index">our courses</a></li>
+                            <li><a asp-controller="about" asp-action="index">about us</a></li>
+                            <li><a asp-controller="teacher" asp-action="index">teachers &amp; faculty</a></li>
                             <li><a href="#">teams &amp; conditions</a></li>
-                            <li><a href="event.html">our events</a></li>
+                            <li><a asp-controller="event" asp-action="index">our events</a></li>
                         </ul>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <p>Copyright © <a href="#" target="_blank">HasTech</a> 2017. All Right Reserved By Hastech.</p>
+                    <p>Copyright © <a href="#">HasTech</a> 2017. All Right Reserved By Hastech.</p>
                 </div>
             </div>
         </div>
