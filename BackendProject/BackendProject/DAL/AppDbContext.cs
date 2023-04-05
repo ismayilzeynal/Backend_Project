@@ -40,5 +40,8 @@ namespace BackendProject.DAL
         public DbSet<About> Abouts { get; set; }
 
         public DbSet<Logo> Logos { get; set; }
+
+        public DbSet<SubscribedEmails> SubscribedEmails { get; set; }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BackendProject.DAL;
+using BackendProject.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FrontToBack.Controllers
@@ -21,5 +22,18 @@ namespace FrontToBack.Controllers
                 .ToList();                
             return PartialView("_SearchPartial", courses);
         }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult subscribe(string email)
+        {
+            SubscribedEmails SEmail = new();
+            SEmail.Email = email;
+            SEmail.IsDeleted = false;
+            _appDbContext.SubscribedEmails.Add(SEmail);
+            return Redirect("~/");
+        }
+
+        
     }
 }
