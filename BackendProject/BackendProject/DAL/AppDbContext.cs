@@ -39,6 +39,6 @@ namespace BackendProject.DAL
 
         public DbSet<About> Abouts { get; set; }
 
-
+        public DbSet<Logo> Logos { get; set; }
     }
 }
